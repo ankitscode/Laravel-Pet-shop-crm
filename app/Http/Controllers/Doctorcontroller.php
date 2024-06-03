@@ -123,7 +123,15 @@ class Doctorcontroller extends Controller
      */
     public function destroy($id)
     {
-        Doctor::find($id)->delete();
-        return redirect()->route('doctor.index');
-    }
+            $doctor = Doctor::find($id);
+        
+            // Delete related treatments first
+            $doctor->treatments()->delete();
+        
+            // Now delete the doctor
+            $doctor->delete();
+        
+            return redirect()->route('doctor.index');
+        }
+        
 }

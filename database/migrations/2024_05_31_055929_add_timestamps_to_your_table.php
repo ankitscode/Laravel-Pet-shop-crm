@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            Schema::table('users', function (Blueprint $table) {
-                $table->string('image'); 
-            });
+        Schema::table('pets', function (Blueprint $table) {
+                $table->timestamps();
+                $table->softDeletes();
+                $table->unsignedInteger('created_by')->nullable();
+                $table->unsignedInteger('updated_by')->nullable();
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('your_table_name', function (Blueprint $table) {
             //
         });
     }

@@ -13,25 +13,18 @@
                             </button>
                         </div>
                     </div>
+                    @php
+                        $columns = [
+                            ['name' => 'Name', 'width' => '20%'],
+                            ['name' => 'Degree', 'width' => '20%'],
+                            ['name' => 'Phone Number', 'width' => '20%'],
+                            ['name' => 'Created at', 'width' => '20%'],
+                            ['name' => 'Updated at', 'width' => '20%'],
+                            ['name' => 'Action', 'width' => '20%'],
+                        ];
+                    @endphp
                     <!-- end card header -->
-                    <div class="card-body">
-                        <div class="table-responsive table-card">
-                            <table class="table table-centered align-middle table-custom-effect table-nowrap mb-0"
-                                style="width:100%;margin-top: 0px !important;" id="mytable">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th style="width: 30%">{{ __('Name') }}</th>
-                                        <th style="width: 30%">{{ __('Degree') }}</th>
-                                        <th style="width: 30%">{{ __('Phone Number') }}</th>
-                                        <th style="width: 10%">{{ __('Action') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <x-datatabel id="mytable" :columns="$columns" /> <!--include component here-->
 
                     <tbody>
 
@@ -136,6 +129,18 @@
                     },
                     {
                         "data": "phone",
+                        "render": function(data, type, row) {
+                            return data;
+                        },
+                    },
+                    {
+                        "data": "created_at",
+                        "render": function(data, type, row) {
+                            return data;
+                        },
+                    },
+                    {
+                        "data": "updated_at",
                         "render": function(data, type, row) {
                             return data;
                         },

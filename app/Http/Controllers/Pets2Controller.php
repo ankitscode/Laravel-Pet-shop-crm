@@ -44,10 +44,9 @@ class Pets2Controller extends Controller
             ]
         );
         $Pets = new Pet;
-        $Pets->name = $request->name;
-        $Pets->breed = $request->breed;
+        $Pets->name = $request->input('Name');
+        $Pets->breed = $request->input('Breed');
         $Pets->save();
-        return redirect()->route('getpet');
     }
 
     /**
@@ -64,7 +63,8 @@ class Pets2Controller extends Controller
     public function edit(string $id)
     {
         $Pet = Pet::find($id);
-        return view('Admin.Pet.upgradepet', compact('Pet'));
+        return response()->json($Pet);
+
     }
 
     /**
@@ -72,19 +72,21 @@ class Pets2Controller extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate(
-            [
-                'name' => 'required',
-                'breed' => 'required',
-            ]
-        );
-        $id = $request['id'];
-        $Pets = Pet::find($id); { //ye hai
-            $Pets->name = $request->name;
-            $Pets->breed = $request->breed;
+        // $request->validate([
+        //     'Name' => 'required|string|max:255',
+        //     'Breed' => 'required|string|max:255',
+        // ]);
+        // $id = $request['id'];
+        $Pets = Pet::find($id); {
+            if (!$Pets) {
+                return response()->json(['error' => 'Pet not found'], 404);
+            }
+            $Pets->name = $request->input('Name');
+            $Pets->breed = $request->input('Breed');
         }
+        // dd($Pets->all());
         $Pets->save();
-        return redirect()->route('getpet')->with('success', 'Pet updated successfully.');
+        return response()->json(['success' => 'Pet updated successfully']);
     }
     /**
      * Remove the specified resource from storage.
@@ -113,8 +115,8 @@ class Pets2Controller extends Controller
     {
         return Datatables::of(Pet::query())
             ->addColumn('Action', function ($pet) {
-                $link = '<a href="' . route('changepet', $pet->id) . '" class="btn btn-primary btn-sm">Edit</a> ' .
-                    '<a href="' . route('droppet', $pet->id) . '"class="btn btn-danger btn-sm">Delete</a>';
+                $link = '<a href="javascript:void(0)" onclick="editPet(' . $pet->id . ')" class="btn btn-primary btn-sm">Edit</a> ' .
+                '<a href="javascript:void(0)" onclick="deletePet(' . $pet->id . ')" class="btn btn-danger btn-sm" id="deleteButton">Delete</a>';
                 return $link;
             })
             ->rawColumns(['Action'])

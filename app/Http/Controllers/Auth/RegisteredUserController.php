@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use App\Events\NewUsers;
+use App\Mail\CreatedUser;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Providers\EventServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -43,9 +46,9 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-
+        event(new NewUsers($user));    //my mail notification
+        Mail::to($user->email)->send(new CreatedUser($user));
         Auth::login($user);
-
         return redirect(RouteServiceProvider::HOME);
     }
 }

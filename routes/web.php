@@ -32,9 +32,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/dashboard', [dashboardcontroller::class, 'index'])->name('dashboard');
 
-    Route::get('/admin/dashboard', [dashboardcontroller::class, 'countpets'])->name('dashboard.pets');
+    Route::get('/refreshdashboard',[dashboardcontroller::class,'refresh'])->name('refreshdashboard');
 
-    Route::get('/dashboardoctors', [dashboardcontroller::class, 'countdoctors'])->name('dashboard.doctors');
+    Route::get('/latestuser',[dashboardcontroller::class,'latestUser'])->name('latestUsers');
 
     //routes for usermodule
     Route::group(["prefix" => "users"], function () {
@@ -56,6 +56,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/viewuser/{id}', [usercontroller::class, 'show'])->name('viewuser');
 
+        Route::post('sendmail',[Usercontroller::class,'sendMail'])->name('sendMail');
+
     });
     //route for petpage
     Route::group(["prefix" => "/pet"], function () {
@@ -67,9 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/created', [Petcontroller::class, 'store'])->name('create.pet');
 
         Route::get('editpets/{id}', [Petcontroller::class, 'edit'])->name('editpet');
-
-        Route::post('updatepets/{id}', [Petcontroller::class, 'update'])->name('Updatepet');
-
+        
         Route::get('deletepets/{id}', [Petcontroller::class, 'destroy'])->name('deletepet'); 
 
         Route::get('showpets/{id}', [Petcontroller::class, 'show'])->name('showpet');
@@ -103,17 +103,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/pets', [Pets2Controller::class, 'datatable'])->name('datatable.index');//datatableroute
 
-    Route::put('/pets/{id}', [Pets2Controller::class, 'update'])->name('updatepet');
+    Route::post('/pets/{id}', [Pets2Controller::class, 'update'])->name('upgradepet');
 
-    Route::get('deletepet/{id}', [Pets2controller::class, 'destroy'])->name('droppet'); // ok
+    Route::get('deletepet/{id}', [Pets2controller::class, 'destroy'])->name('droppet'); 
 
     Route::post('Addpet', [Pets2controller::class, 'store'])->name('Addpet');
 
     Route::get('changepet/{id}', [Pets2controller::class, 'edit'])->name('changepet');
 
-    Route::put('upgradepet/{id}', [Pets2controller::class, 'update'])->name('upgradepet');
-
-    Route::get('deletepet/{id}', [Pets2controller::class, 'delete'])->name('droppet');
+    Route::post('deletepet/{id}', [Pets2controller::class, 'delete'])->name('droppet');
 
     //Route for Treatment
 

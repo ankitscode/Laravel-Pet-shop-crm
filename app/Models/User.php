@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+
+use App\Events\NewUsers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use carbon\Carbon;
 
 class User extends Authenticatable
 {
+    use Notifiable;
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -40,6 +45,42 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => ucfirst($value),
+        );
+    }
+
+    protected function email(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => ucfirst($value),
+        );
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
+    
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
+
+    
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime:Y-m-d',
+            'updated_at'=>'datetime:Y-m-d',
+        ];
+    }
+
+    protected $dispatchesEvents = [
+        'created' => NewUsers::class,
     ];
     public function pet()
     {

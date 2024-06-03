@@ -12,6 +12,14 @@
 <!-- Dashboard init -->
 <script src="{{url('assets/js/pages/dashboard-crm.init.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <script>
+    
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+</script>
 
 <!-- App js -->
 {{-- <script src="{{url('assets/js/app.js')}}"></script> --}}

@@ -7,7 +7,7 @@
 <!-- Layout config Js -->
 <script src="{{ url('assets/js/layout.js')}}"></script>
 <!-- Bootstrap Css -->
-<link href="{{ url('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+{{-- <link href="{{ url('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" /> --}}
 <!-- Icons Css -->
 <link href="{{ url('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 <!-- App Css-->

@@ -13,23 +13,26 @@
                         </div>
                     </div>
                     <!-- end card header -->
-                    <div class="card-body">
-                        <div class="table-responsive table-card">
-                            <table class="table table-centered align-middle table-custom-effect table-nowrap mb-0" style="width:100%;margin-top: 0px !important;" id="mytable">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th style="width: 20%">{{ __('Treatment') }}</th>
-                                        <th style="width: 20%">{{ __('Note') }}</th>
-                                        <th style="width: 20%">{{ __('Pet Name') }}</th>
-                                        <th style="width: 20%">{{ __('Breed') }}</th>
-                                        <th style="width: 20%">{{  __('Action') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                     @php
+                        $columns = [
+                            ['name' => 'Treatment', 'width' => '10%'],
+                            ['name' => 'Note', 'width' => '10%'],
+                            ['name' => 'Pet Name', 'width' => '10%'],
+                            ['name' => 'Note', 'width' => '10%'],
+                            ['name' => 'Createdat at', 'width' => '15%'],
+                            ['name' => 'updated at', 'width' => '15%'],
+                            ['name' => 'Action', 'width' => '20%'],
+                        ];
+                    @endphp 
+                     <x-datatabel id="mytable" :columns="$columns" />
+                     
+                    <!-- end card header -->
+                    {{-- <x-datatabel id="mytable" >
+                        <th style="width: 30%">{{ __('$Name') }}</th>
+                        <th style="width: 30%">{{ __('$Degree') }}</th>
+                        <th style="width: 30%">{{ __('Phone Number') }}</th>
+                        <th style="width: 10%">{{ __('Action') }}</th>
+                    </x-datatabel> --}}
                                 </thead>
                                 {{-- @if (isset($Treatments) && !empty($Treatments)) --}}
                                 <tbody>
@@ -116,6 +119,18 @@
                 },
                 {
                     "data": "breed",
+                    "render": function(data, type, row) {
+                        return data;
+                    },
+                },
+                {
+                    "data": "created_at",
+                    "render": function(data, type, row) {
+                        return data;
+                    },
+                },
+                {
+                    "data": "updated_at",
                     "render": function(data, type, row) {
                         return data;
                     },

@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pets', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('breed');
-            $table->string('user_id')->nullable(false);
-        });  
+        Schema::table('doctors', function (Blueprint $table) {
+            $table->softDeletes();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
+        });
     }
 
     /**
@@ -24,6 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-    
+        Schema::table('doctors', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -86,23 +86,18 @@
                         <h4> <strong>Create User</strong></h4>
                         <a href="{{ route('user') }}" class="btn btn-success btn-sml" id=addbtn  style="border-radius: 15px;">Add</a>
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-custom table-centered align-middle table-nowrap mb-0 " id="mytable">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th style="width: 30%">{{ __('Profile') }}</th>
-                                        <th style="width: 30%">{{ __('Name') }}</th>
-                                        <th style="width: 30%">{{ __('Email') }}</th>
-                                        <th style="width: 10%">{{ __('Action') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{-- fordatabel --}}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    @php
+                    $columns = [
+                        ['name' => 'Profile', 'width' => '10%'],
+                        ['name' => 'Name', 'width' => '20%'],
+                        ['name' => 'Email', 'width' => '20%'],
+                        ['name' => 'Created_at', 'width' => '20%'],
+                        ['name' => 'Updated at', 'width' => '10%'],
+                        ['name' => 'Action', 'width' => '10%'],
+                    ];
+                @endphp
+                <!-- end card header -->
+                <x-datatabel id="mytable" :columns="$columns" />
                     </tbody>
                     </table>
                 </div>
@@ -157,6 +152,18 @@
                         },
                     },
                     {
+                        "data": "created_at",
+                        "render": function(data, type, row) {
+                            return data;
+                        },
+                    },
+                    {
+                        "data": "updated_at",
+                        "render": function(data, type, row) {
+                            return data;
+                        },
+                    },
+                    {
                         "data": "Action",
                         "render": function(data, type, row) {
                             return data;
@@ -183,7 +190,7 @@
                     }
                 ],
                 "order": [
-                    [1, 'asc']
+                    [1, 'desc']
                 ]
             });
         });
