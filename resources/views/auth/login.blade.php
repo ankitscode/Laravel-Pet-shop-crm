@@ -73,6 +73,11 @@
                                                     class="fw-semibold text-primary text-decoration-underline">
                                                     Signup </a> </p>
                                         </div>
+                                        <div class="mt-4 text-center">
+                                            <p class="mb-0">Login As Doctor <a href="{{ route('loginasdoctor') }}"
+                                                    class="fw-semibold text-primary text-decoration-underline">
+                                                    Login </a> </p>
+                                        </div>
 
                                         <div class="mt-4 text-center">
                                             <div class="signin-other-title">

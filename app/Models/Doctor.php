@@ -1,17 +1,33 @@
 <?php
-
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Foundation\Auth\User as AuthenticatableUser;
 
-class Doctor extends Model
+class Doctor extends AuthenticatableUser implements Authenticatable
 {
-    use HasFactory;
+
+    use Notifiable;
+
     protected $table = 'doctors';
-    protected $primary_key = 'id';
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'name',
+        'phone',
+        'degree',
+        'password',
+    ];
+
+    protected $hidden = [
+        'password',
+    ];
 
     protected function name(): Attribute
     {
@@ -36,11 +52,14 @@ class Doctor extends Model
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
     }
-    public function pets(){
-        return $this->belongsToMany(Pet::class,'treatments','doc_id','pet_id');
+
+    public function pets()
+    {
+        return $this->belongsToMany(Pet::class, 'treatments', 'doc_id', 'pet_id');
     }
+
     public function treatments()
     {
-        return $this->hasMany(Treatment::class,'doc_id', 'id');
+        return $this->hasMany(Treatment::class, 'doc_id', 'id');
     }
 }

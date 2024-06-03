@@ -14,6 +14,7 @@ class Dashboardcontroller extends Controller
      */
     public function index()
     {
+        dd("Hello Dashboard");
         $data = User::all();
         $count = $data->count();
 
