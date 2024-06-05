@@ -19,7 +19,8 @@ class RegisterDoctorController extends Controller
      */
     public function index()
     {
-        //
+
+
     }
 
     /**
@@ -32,23 +33,21 @@ class RegisterDoctorController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        
+        // dd($request);
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'unique:'.Doctor::class],
             'degree'=>['required','string'],
             'password' => ['required', Rules\Password::defaults()],
         ]);
-
         $Doctor = Doctor::create([
             'name' => $request->name,
             'phone' => $request->phone,
             'degree'=>$request->degree,
-            'password' => Hash::make($request->password),
+            'password' =>($request->password),
         ]);
-
         // event(new Registered($Doctor));
-        Auth::login($Doctor);
+        Auth::guard('doctor')->login($Doctor);
         // dd(auth()->check()); 
         return redirect()->route('doctor.index');
     }

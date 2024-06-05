@@ -24,36 +24,35 @@ class DoctorLoginController extends Controller
      */
     public function create()
     {
+        
         return view('auth.doctor-login');
-
 
     }
     public function authDoctor(Request $request)
-    {
-      
+    {     
+        // dd($request);
         $request->validate([
             'phone' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        if (Auth::guard('doctors')->attempt(['phone' => $request->phone, 'password' => $request->password])) {
-            // Authentication successful
-            $request->session()->regenerate();
-            return redirect()->intended(RouteServiceProvider::HOME);
-        }
-    
+        // dd(auth('doctor')->check());
+        if (Auth::guard('doctor')->attempt(['phone' => $request->phone, 'password' => $request->password])) {
+
+            return redirect()->route('doctor.index');
+            // ->intended(RouteServiceProvider::DOCTOR_HOME)
+        }  
         // Authentication failed
         return redirect()->back()->withInput($request->only('phone'))->withErrors([
             'password' => 'The provided credentials do not match our records.',
         ]);
     }
-
     /**
      * Destroy an authenticated session.
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('doctors')->logout();
+        Auth::guard('doctor')->logout();
 
         $request->session()->invalidate();
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Doctor;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -61,5 +62,13 @@ class ProfileController extends Controller
     {
         $Users =User::with('pet')->find($id);
         return view("profile.userprofile",compact('Users'));
+    }
+
+    public function showDoc(){
+
+        $Doctor=Doctor::get();
+        dd($Doctor);
+        return view('profile.doctorprofile',compact('Doctor'));
+
     }
 }

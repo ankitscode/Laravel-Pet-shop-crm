@@ -53,7 +53,6 @@ class Doctorcontroller extends Controller
             // 'pet_ids' => 'array|required', // Ensure pet_ids is an array and required
             // 'pet_ids.*' => 'exists:pets,id', // Ensure each id in pet_ids exists in the pets table
         ]);
-
         // Create a new doctor
         $Doctors = new Doctor;
         $Doctors->name = $request->name;
@@ -67,9 +66,6 @@ class Doctorcontroller extends Controller
         // Redirect to the doctor index page
         return redirect(route('doctor.index'));
     }
-
-
-
     /**
      * Display the specified resource.
      */
@@ -132,6 +128,6 @@ class Doctorcontroller extends Controller
             $doctor->delete();
         
             return redirect()->route('doctor.index');
-        }
+       }
         
 }

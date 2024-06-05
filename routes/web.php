@@ -30,25 +30,10 @@ Route::get('/Signup', function () {
     return route('register');
 })->name('Signup');
 
-//route to login/sign for doctor
-Route::get('/DoctorSignup', [RegisterDoctorController::class, 'create'])->name('DoctorSignup');
-
-Route::get('/loginasdoctor', [DoctorLoginController::class, 'create'])->name('loginasdoctor');
-
-// Routes accessible to doctors
-
-Route::post('/doctor', [DoctorLoginController::class, 'authDoctor'])->name('doctorlogin');
-
-Route::post('/signupdoctor', [RegisterDoctorController::class, 'store'])->name('doctorgetting');
-
-Route::group(['middleware' => 'auth'], function () {
-
+Route::group(['middleware' => 'auth'], function () {   
     //route for login/register of doctors
-    Route::get('/dashboard', [dashboardcontroller::class, 'index'])->name('dashboard')->middleware('auth:doctors');
-
-    Route::post('/login', [DoctorLoginController::class, 'store'])->name('loginauthdoctor');
-
-
+    Route::get('/dashboard', [dashboardcontroller::class, 'index'])->name('dashboard');
+    
     Route::get('/refreshdashboard', [dashboardcontroller::class, 'refresh'])->name('refreshdashboard');
 
     Route::get('/latestuser', [dashboardcontroller::class, 'latestUser'])->name('latestUsers');
@@ -91,30 +76,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('showpets/{id}', [Petcontroller::class, 'show'])->name('showpet');
     });
     //route for doctorpage
-    Route::group(["prefix" => "doctor"], function () {
-
-        Route::get('/doctors', [Doctorcontroller::class, 'index'])->name('doctor.index');
-
-        Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctor.create');
-
-        Route::post('/Createdoctor', [Doctorcontroller::class, 'store'])->name('createdoctor');
-
-        Route::get('/editdoctor/{id}', [Doctorcontroller::class, 'edit'])->name('editdoctor');
-
-        Route::post('/updatedoctor/{id}', [Doctorcontroller::class, 'update'])->name('updatedoctor');
-
-        Route::get('/deletedoctor/{id}', [Doctorcontroller::class, 'destroy'])->name('deletedoctor');
-
-        Route::get('/viewedoctor/{id}', [Doctorcontroller::class, 'show'])->name('showdoctor'); ///
-
-        Route::get('/doctor', [Doctorcontroller::class, 'datatable'])->name('table.index'); //datatable route for doctor
-    });
+    
 
     Route::group(["prefix" => "Userprofile"], function () {
 
         Route::get('/viewuserprofile/{id}', [Profilecontroller::class, 'view'])->name('showuser');
+        
+        Route::get('showdocguard/{id}',[ProfileController::class,'showDoc'])->name('showdocguard');
     });
-    //Route for Pets2Controller
+    //Route for Pets2Controller,
     Route::get('/getpet', [Pets2Controller::class, 'index'])->name('getpet');
 
     Route::get('/pets', [Pets2Controller::class, 'datatable'])->name('datatable.index'); //datatableroute
@@ -128,6 +98,26 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('changepet/{id}', [Pets2controller::class, 'edit'])->name('changepet');
 
     Route::post('deletepet/{id}', [Pets2controller::class, 'delete'])->name('droppet');
+
+});
+
+Route::group(['middleware'=>'doctor'],function(){
+
+    Route::get('/doctors', [Doctorcontroller::class, 'index'])->name('doctor.index');
+
+    Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctor.create');
+
+    Route::post('/Createdoctor', [Doctorcontroller::class, 'store'])->name('createdoctor');
+
+    Route::get('/editdoctor/{id}', [Doctorcontroller::class, 'edit'])->name('editdoctor');
+
+    Route::post('/updatedoctor/{id}', [Doctorcontroller::class, 'update'])->name('updatedoctor');
+
+    Route::get('/deletedoctor/{id}', [Doctorcontroller::class, 'destroy'])->name('deletedoctor');
+
+    Route::get('/viewedoctor/{id}', [Doctorcontroller::class, 'show'])->name('showdoctor'); ///
+
+    Route::get('/doctor', [Doctorcontroller::class, 'datatable'])->name('table.index'); 
 
     //Route for Treatment
 

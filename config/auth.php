@@ -41,7 +41,7 @@ return [
             'provider' => 'users',
         ],
 
-        'doctors' => [
+        'doctor' => [
             'driver' => 'session',
             'provider' => 'doctors',
         ],
@@ -100,6 +100,12 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'doctors' => [
+            'provider' => 'doctors',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

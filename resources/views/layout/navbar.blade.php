@@ -271,11 +271,22 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
-                        <h6 class="dropdown-header">{{ Auth::user()->name }}</h6>
-                        <a class="dropdown-item" href="{{ route('showuser',['id' => Auth::user()->id])}}">
-                            <i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
-                            User Profile
-                        </a>
+                        {{-- @if(auth()->check() && auth()->user()->hasRole('doctor')) --}}
+                        @auth
+                            <h6 class="dropdown-header">{{ auth()->user()->name }}</h6>
+                            <a class="dropdown-item" href="{{ route('showuser',['id' => auth()->user()->id])}}">
+                                <i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
+                                User Profile
+                            </a>
+                        @endauth
+                        @auth('doctor')
+                            <h6 class="dropdown-header">{{ auth('doctor')->user()->name }}</h6>
+                            <a class="dropdown-item" href="{{ route('showdoctor',['id' => auth('doctor')->user()->id])}}">
+                                <i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
+                                Doctor Profile
+                            </a>
+                        @endauth
+                        {{-- @endif                     --}}
                         <a class="dropdown-item" href="javascript::void(0)"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>

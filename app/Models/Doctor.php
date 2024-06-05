@@ -27,7 +27,9 @@ class Doctor extends AuthenticatableUser implements Authenticatable
 
     protected $hidden = [
         'password',
+        'remember_token',
     ];
+    protected $guard='doctor';
 
     protected function name(): Attribute
     {

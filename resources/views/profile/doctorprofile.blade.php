@@ -18,14 +18,8 @@
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h4 class="text-right">User Profile</h4>
                                 </div>
-                                <form action="{{ route('showuser', ['id' => auth()->user()->id]) }}" method="GET">
+                                <form action="{{ route'showdoc', ['id' => auth()->user()->id]) }}" method="GET">
                                     @csrf
-                                    <div class="row mt-2">
-                                        <label for="image" class="form-label">Profile</label>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('storage/images/' . auth()->user()->image) }}" alt="Profile Image" class="img-thumbnail img-icon-size me-3">
-                                        </div>
-                                    </div>
                                     <div class="row mt-2">
                                         <div class="col-md-12">
                                             <label class="labels">Name</label>
@@ -34,12 +28,11 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12">
-                                            <label for="email" class="labels">Email</label>
+                                            <label for="email" class="labels">Phone</label>
                                             <input type="text" class="form-control" name="email" placeholder="Email" value="{{ auth()->user()->email }}" readonly>
                                         </div>
                                     </div>
                                     <!-- Add more fields as needed -->
-
                                 </form>
                             </div>
                         </div>

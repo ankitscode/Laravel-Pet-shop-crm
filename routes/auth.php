@@ -9,6 +9,10 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\DoctorLoginController;
+use App\Http\Controllers\Auth\RegisterDoctorController;
+use App\Http\Controllers\Doctorcontroller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -56,4 +60,22 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
-});
+                
+            });
+
+
+
+            //route for authentication and registeration of doctors
+Route::get('/DoctorSignup', [RegisterDoctorController::class, 'create'])->name('DoctorSignup');
+
+Route::get('/loginasdoctor', [DoctorLoginController::class, 'create'])->name('loginasdoctor');
+
+Route::post('/doctor', [DoctorLoginController::class, 'authDoctor'])->name('doctorlogin');
+
+Route::post('/signupdoctor', [RegisterDoctorController::class, 'store'])->name('doctorgetting');
+// ->middleware('guest:doctor');
+
+// Route::group(['middleware'=>'doctors'],function(){
+//     Route::post('/doctor', [DoctorLoginController::class, 'authDoctor'])->name('doctorlogin');
+//     Route::post('/signupdoctor', [RegisterDoctorController::class, 'store'])->name('doctorgetting');
+// });
